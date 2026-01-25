@@ -6,6 +6,7 @@ I documented my learning and hands-on practice while studying cybersecurity and 
 
 ## Topics Covered
 - Network scanning and mapping using Nmap
+  - Practiced basic scanning, host discovery, and service version detection using Nmap to identify     open ports and services on a permitted public host.
 - Network traffic analysis using Wireshark
 - Phishing analysis and common red flags
 
