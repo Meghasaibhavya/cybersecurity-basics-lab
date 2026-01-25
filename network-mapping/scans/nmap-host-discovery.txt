@@ -1,4 +1,4 @@
-nmap -sn scanme.nmap.org
+# Output of: nmap -sn scanme.nmap.org
 
 Starting Nmap 7.98 ( https://nmap.org ) at 2026-01-25 18:07 -0500
 Nmap scan report for scanme.nmap.org (45.33.32.156)
