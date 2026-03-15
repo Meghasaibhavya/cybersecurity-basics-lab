@@ -15,19 +15,19 @@ This folder documents my hands-on analysis of network traffic during reconnaissa
 Before a network scan can reach its destination, the system must resolve the domain name. I isolated the outbound DNS queries to observe the system identifying the target's IP infrastructure.
 - **Display Filter:** `dns && dns.flags.response == 0`
 
-<img width="900" alt="DNS Queries in Wireshark" src="https://github.com/user-attachments/assets/ae6c5d69-a591-445c-8b48-f57de9d26189" />
+<img width="1024" height="499" alt="Image" src="https://github.com/user-attachments/assets/abc47d35-3a45-4cde-b4dd-c69b97ea0ee6" />
 
 ### 2. Identifying TCP SYN Stealth Scans
 I examined the signature of a "Stealth Scan" (SYN scan). By filtering for packets where only the SYN flag is set, I identified the rapid sequence of connection attempts used to probe for open services.
 - **Display Filter:** `tcp.flags.syn == 1`
 
-<img width="900" alt="TCP SYN Packet Analysis" src="https://github.com/user-attachments/assets/cd4d0497-c2e4-4f21-9314-5df4e34fe0cd" />
+<img width="1017" height="551" alt="Image" src="https://github.com/user-attachments/assets/55f17e85-23c2-498c-a95a-9de7e5c6990e" />
 
 ### 3. Service Verification (SYN-ACK Responses)
 To confirm which ports were identified as active and "Open," I filtered for the target's response. A `[SYN, ACK]` packet indicates that the server is listening and willing to complete the connection.
 - **Display Filter:** `tcp.flags.syn == 1 && tcp.flags.ack == 1`
 
-<img width="900" alt="SYN-ACK Response Verification" src="https://github.com/user-attachments/assets/a1ef7d13-1be7-4fff-a9b9-44c3f32ed396" />
+<img width="1026" height="460" alt="Image" src="https://github.com/user-attachments/assets/7655d5e3-1f49-4d68-8260-ad084aabbc96" />
 
 ---
 
