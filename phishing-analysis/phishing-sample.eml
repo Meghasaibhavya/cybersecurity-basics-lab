@@ -1,0 +1,26 @@
+Delivered-To: victim@northeastern.edu
+Received: from mail-issuer.attacker-infra.net (192.0.2.1) 
+          by mx.google.com with ESMTPS id p22si1234567oqb.12.2026.04.23.10.00
+          for <victim@northeastern.edu>;
+          Thu, 23 Apr 2026 10:00:00 -0700 (PDT)
+Authentication-Results: mx.google.com;
+       spf=fail (google.com: domain of support@paypal.com does not designate 192.0.2.1 as permitted sender)
+       dkim=fail (signature verification failed)
+       dmarc=fail (p=REJECT sp=REJECT) action=none;
+Return-Path: <bounce-handler@attacker-infra.net>
+From: "PayPal Support" <support@paypal.com>
+To: victim@northeastern.edu
+Subject: Urgent: Your account has been temporarily restricted!
+Date: Thu, 23 Apr 2026 17:00:00 +0000
+Content-Type: text/html; charset="UTF-8"
+
+<html>
+<body>
+<p>Dear Valued Customer,</p>
+<p>We've noticed some suspicious activity on your PayPal account. To protect your funds, we have temporarily restricted access to your account.</p>
+<p>To restore your access, please verify your identity by clicking the button below:</p>
+<p><a href="http://login-paypal-secure.net/verify/account_id=99283" style="background-color: #0070ba; color: white; padding: 10px; text-decoration: none;">Secure Your Account Now</a></p>
+<p>If you do not complete this verification within 24 hours, your account will be permanently suspended.</p>
+<p>Thank you for choosing PayPal.</p>
+</body>
+</html>
