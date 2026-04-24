@@ -10,36 +10,46 @@ This laboratory demonstrates the process of triaging a suspicious email. The goa
 ## Lab Activities
 
 ### 1. Technical Header Forensics
-I analyzed the raw `.eml` source code to verify the digital "envelope" of the message. [cite_start]This mirrors the process of inspecting file metadata and system configurations found in my other security walkthroughs[cite: 1].
+The raw `.eml` source code was analyzed to verify the digital “envelope” of the message.
 
-* **Observation**: The `From` address is spoofed as `support@paypal.com`, but the `Return-Path` is directed to `bounce-handler@attacker-infra.net`.
+* **Observation**:
+  * From: `support@paypal.com` (spoofed)
+  * Return-Path: `bounce-handler@attacker-infra.net`
+  * Source IP: `192.0.2.1`
+    
 * **Authentication Results**:
-    * **SPF (Sender Policy Framework)**: **FAIL** — The sending IP (`192.0.2.1`) is not authorized to send mail for `paypal.com`.
-    * **DKIM (DomainKeys Identified Mail)**: **FAIL** — The cryptographic signature is invalid or missing.
-    * **DMARC**: **FAIL** — The email failed alignment and should have been rejected by a strict policy.
+    * SPF: FAIL — Sending IP (192.0.2.1) is not authorized for paypal.com
+    * DKIM: FAIL — Signature validation unsuccessful or absent
+    * DMARC: FAIL — Policy alignment failure; message would be rejected under enforcement
 
+* **Interpretation:** The mismatch between the visible sender and underlying infrastructure indicates likely email spoofing due to sender infrastructure mismatch.
 ### 2. Social Engineering Analysis
-I performed a visual inspection of the email body to identify psychological triggers commonly used in cyberattacks.
+The email body was analyzed to identify manipulation techniques commonly used in phishing campaigns.
 
-* [cite_start]**Sense of Urgency**: The subject line and body threaten "Permanent Suspension" within 24 hours to induce panic, a common tactic described in security reconnaissance[cite: 1].
-* **The "Hover Test"**: By hovering over the "Secure Your Account Now" button, I observed that the visible text points to a trusted domain while the actual destination is a suspicious IP-based URL.
-* **Generic Greeting**: The use of "Dear Valued Customer" instead of a personalized name indicates a mass-distributed phishing campaign rather than a legitimate service communication.
+**Findings:**
+   * Urgency pressure: Claims account suspension within 24 hours to force immediate action.
+   * Credential harvesting lure: Call-to-action link is designed to imitate a legitimate login process while directing to a non-trusted domain.
+   * Generic salutation: “Dear Valued Customer” indicates bulk phishing distribution.
+   * Link deception: Displayed branding does not match actual destination URL.
+     
+### 3. Indicator Review (IoCs)
+The following indicators were extracted and safely defanged for documentation:
 
-### 3. Artifact Triage & Safety
-[cite_start]I extracted and "defanged" the malicious indicators to prevent accidental execution, following standard industry safety procedures[cite: 1].
+* URL: `hxxp://login-paypal-secure[.]net/verify/account_id=99283`
+* IP address: `192[.]0[.]2[.]1`
+* Domain: `attacker-infra[.]net`
 
-* **Malicious URL**: `hxxp[://]login-paypal-secure[.]net/verify/account_id=99283`
-* **Source IP**: `192[.]0[.]2[.]1`
-* **Tool Proof**: I submitted the URL to **VirusTotal** for automated analysis, where it was flagged by multiple vendors as a credential harvester.
+Assessment:
+The domain structure, impersonation pattern, and URL formatting are consistent with credential-harvesting phishing infrastructure observed in simulated attack scenarios.
 
 ---
 
 ## Technical Takeaways
-* **Protocol Proficiency**: Gained hands-on experience identifying failures in **SPF**, **DKIM**, and **DMARC**.
-* **Safe Handling**: Established a professional workflow for analyzing threats in a **Sandbox** environment and documenting them safely using **Defanging**.
-* [cite_start]**Analyst Mindset**: Developed the ability to connect technical discrepancies in headers to behavioral lures in the email body, similar to the multi-step analysis required for complex security challenges[cite: 1].
-
+* Identified email spoofing through SPF, DKIM, and DMARC failures.
+* Correlated header inconsistencies with sender impersonation techniques.
+* Recognized common phishing patterns including urgency-based manipulation and brand impersonation.
+* Applied structured triage methodology for extracting and documenting IoCs.
 ---
 
 ### Final Verdict: **MALICIOUS**
-The combination of failed authentication, spoofed headers, and urgency-based social engineering confirms this is a targeted phishing attempt aimed at credential theft.
+The combination of failed authentication, sender spoofing, and credential-harvesting indicators confirms this email is a phishing attempt designed to deceive users into disclosing sensitive information.
